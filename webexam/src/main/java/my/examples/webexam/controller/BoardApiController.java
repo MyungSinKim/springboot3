@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/boards")
 public class BoardApiController {
-
+    // /api/boards/100
     @GetMapping(path = "/{id}")
     public ResponseEntity<Board> getBoard(@PathVariable(name = "id") long id){
         Board board = Board.builder().name("kim").content("content2").title("title2").build();

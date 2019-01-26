@@ -68,6 +68,8 @@ public class BoardController {
         }
     }
 
+
+    // /boards?format=csv 요청은 text/csv
     @GetMapping(params = "format=csv")
     public String getBoardsToXls(Model model){
         Board board2 = Board.builder().name("kim").content("content2").title("title2").build();
