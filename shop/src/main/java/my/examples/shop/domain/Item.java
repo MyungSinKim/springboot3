@@ -6,6 +6,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "item") // user 라는 테이블명은 DBMS에서 생성안될 수 있다.
@@ -22,5 +24,17 @@ public class Item {
 
     public Item(){
         createDate = LocalDateTime.now();
+    }
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private Set<ItemImage> itemImages;
+
+    // helper 메소드
+    public void addImage(ItemImage itemImage){
+        if(itemImages == null)
+            itemImages = new HashSet<>();
+
+        itemImage.setItem(this); // 쌍방향이라서 this를 넣어줘야한다.
+        itemImages.add(itemImage);
     }
 }

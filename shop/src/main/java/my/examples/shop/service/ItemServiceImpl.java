@@ -28,9 +28,16 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Item> getItems(String searchStr, int page) {
         Pageable pageable = PageRequest.of(page -1, 5);
         Page<Item> items = itemRepository.getItems(searchStr, pageable);
         return items;
+    }
+
+    @Override
+    @Transactional
+    public void addItem(Item item) {
+        itemRepository.save(item);
     }
 }

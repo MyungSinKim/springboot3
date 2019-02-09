@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>item 등록폼 </title>
+</head>
+<body>
+    <h1>item 등록폼 </h1>
+
+    <form method="post" action="/admin/items/write" enctype="multipart/form-data">
+        name : <input type="text" name="name"><br>
+        price : <input type="text" name="price"><br>
+
+        image 1 : <input type="file" name="image1"><br>
+        image 2 : <input type="file" name="image2"><br>
+        <input type="submit" value="ok">
+    </form>
+</body>
+</html>
+
+
