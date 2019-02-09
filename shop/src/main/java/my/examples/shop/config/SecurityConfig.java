@@ -15,6 +15,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // 아예 인가처리를 하지 않는 (무시하는 URL설정) - 이미지 or css, javascript
     @Override
     public void configure(WebSecurity web) throws Exception {
+
+//    PathRequest.toStaticResources().atCommonLocations()
+//    CSS(new String[]{"/css/**"}),
+//    JAVA_SCRIPT(new String[]{"/js/**"}),
+//    IMAGES(new String[]{"/images/**"}),
+//    WEB_JARS(new String[]{"/webjars/**"}),
+//    FAVICON(new String[]{"/**/favicon.ico"});
+
         web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .requestMatchers(new AntPathRequestMatcher("/**.html"))
@@ -26,8 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/main").and()
-                .authorizeRequests()
+                    .logoutSuccessUrl("/main")
+                    .permitAll().and()
+                .authorizeRequests() // 인가에 대한 설정
                     .antMatchers("/main").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/h2-console/**").permitAll()
@@ -35,10 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .csrf().ignoringAntMatchers("/**") // h2-console로그인창이 csrf를 지원.
                 .and().headers().frameOptions().disable() // h2-console을 사용하려면 설정
-//                .and().formLogin()
-//                .loginProcessingUrl("/users/login")
-//                .loginPage("/users/login").usernameParameter("email").passwordParameter("password")
-//                .failureUrl("/uers/login?fail=true")
-                .and().logout().permitAll();
+                .and().formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
+                    .loginProcessingUrl("/users/login")
+                    .loginPage("/users/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
+                            .usernameParameter("email")
+                            .passwordParameter("password")
+                    .failureUrl("/users/login?fail=true");
+
     }
 }
