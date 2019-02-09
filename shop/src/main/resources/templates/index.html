@@ -5,6 +5,24 @@
 </head>
 <body>
     <h1>index!!!!</h1>
+
+    <div th:text="${itemPage.size}"></div>
+
+<table>
+    <tbody>
+    <tr th:each="item : ${itemPage.content}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.price}"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<form method="get" action="/main">
+<input type="text" name="searchStr">
+<input type="submit" value="search">
+</form>
 </body>
 </html>
 
