@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,4 +29,16 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") ,
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
     private Set<Role> roles;
+
+    // 엔티티의 초기값을 설정하기 위한 생성자를 만든다.
+    public User(){
+        createDate = LocalDateTime.now();
+        roles = new HashSet<>();
+    }
+
+    public void addRole(Role role){
+        if(roles == null)
+            roles = new HashSet<>();
+        roles.add(role);
+    }
 }
