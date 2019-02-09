@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>user info</title>
+</head>
+<body>
+    <h1>user info</h1>
+
+    <div th:text="${#authentication.principal.name}">
+    </div>
+
+    <div th:text="${securityUser.id}"></div>
+    <div th:text="${securityUser.name}"></div>
+    <div th:text="${securityUser.email}"></div>
+
+    <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+        has USER ROLE
+    </div>
+</body>
+</html>
+
+

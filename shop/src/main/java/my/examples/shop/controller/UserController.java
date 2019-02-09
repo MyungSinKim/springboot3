@@ -3,12 +3,17 @@ package my.examples.shop.controller;
 import lombok.RequiredArgsConstructor;
 import my.examples.shop.domain.User;
 import my.examples.shop.dto.UserJoinDto;
+import my.examples.shop.service.SecurityUser;
 import my.examples.shop.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
@@ -58,5 +63,20 @@ public class UserController {
     @GetMapping("/welcome")
     public String welcome(){
         return "users/welcome";
+    }
+
+
+    @GetMapping("/info")
+    public String userinfo(Principal principal, Model model){
+        SecurityUser securityUser =
+                (SecurityUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("securityUser", securityUser);
+        System.out.println("--------------------");
+        System.out.println(principal.getName());
+        System.out.println(securityUser.getId());
+        System.out.println(securityUser.getName());
+        System.out.println(securityUser.getEmail());
+        System.out.println("--------------------");
+        return "users/info";
     }
 }
