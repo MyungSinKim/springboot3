@@ -40,6 +40,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .loginPage("/users/login").usernameParameter("email").passwordParameter("password")
 //                .failureUrl("/uers/login?fail=true")
                 .and().logout().permitAll();
-
     }
 }

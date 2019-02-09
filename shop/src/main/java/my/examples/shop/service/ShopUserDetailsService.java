@@ -30,10 +30,14 @@ public class ShopUserDetailsService implements UserDetailsService {
         for(Role role : roles){
            list.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         }
-        org.springframework.security.core.userdetails.User user =
-                new org.springframework.security.core.userdetails.User(email,
+        // Spring Security가 제공하는 UserDetails 를 구현하는 객체에
+        // 추가적인 정보를 가지도록 클래스를 만들었다.
+        SecurityUser user =
+                new SecurityUser(email,
                         userByEmail.getPasswd(),
                         list);
+        user.setId(userByEmail.getId());
+        user.setName(userByEmail.getName());
         return user;
     }
 }
